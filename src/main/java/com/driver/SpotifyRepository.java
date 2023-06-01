@@ -244,8 +244,11 @@ public class SpotifyRepository {
         for(Artist artist:artists){
             if(artist.getLikes()>likes){
                 likes=artist.getLikes();
-                name=artist.getName();
             }
+        }
+        for (Artist artist:artists){
+            if(artist.getLikes()==likes)
+                name=artist.getName();
         }
         return name;
     }
@@ -256,6 +259,10 @@ public class SpotifyRepository {
         for(Song song:songs){
             if(song.getLikes()>likes){
                 likes=song.getLikes();
+            }
+        }
+        for(Song song:songs){
+            if(song.getLikes()==likes){
                 name=song.getTitle();
             }
         }
