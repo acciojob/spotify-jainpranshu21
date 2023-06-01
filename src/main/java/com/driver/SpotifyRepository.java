@@ -40,37 +40,48 @@ public class SpotifyRepository {
     public User createUser(String name, String mobile) {
         User user=new User(name,mobile);
         users.add(user);
-        userPlaylistMap.put(user,new ArrayList<>());
         return user;
     }
 
     public Artist createArtist(String name) {
         Artist artist=new Artist(name);
         artists.add(artist);
-        artistAlbumMap.put(artist,new ArrayList<>());
         return artist;
     }
 
     public Album createAlbum(String title, String artistName) {
-        Artist artist=new Artist(artistName);
-        if(!artistAlbumMap.containsKey(artist)){
-            artists.add(artist);
-            artistAlbumMap.put(artist,new ArrayList<>());
-        }
+        boolean check=false;
+        Artist artist1=null;
+       for(Artist artist:artists){
+           if(artist.getName().equals(artistName)){
+               check=true;
+               artist1=artist;
+           }
+       }
+       if(check==false){
+            artist1=new Artist(artistName);
+           artists.add(artist1);
+       }
         Album album=new Album(title);
         albums.add(album);
-        artistAlbumMap.put(artist,albums);
-        albumSongMap.put(album,new ArrayList<>());
+        artistAlbumMap.put(artist1,albums);
         return album;
     }
 
     public Song createSong(String title, String albumName, int length) throws Exception{
-        Album album=new Album(albumName);
-        if(!albumSongMap.containsKey(album))
+        boolean check =false;
+        Album album1=null;
+        for(Album album:albums){
+            if(album.getTitle().equals(albumName)){
+                check=true;
+                album1=album;
+            }
+        }
+        if(check==false)
             throw new Exception("Album does not exist");
         Song song=new Song(title,length);
         songs.add(song);
-        albumSongMap.put(album,songs);
+        albumSongMap.put(album1,songs);
         return song;
     }
 
