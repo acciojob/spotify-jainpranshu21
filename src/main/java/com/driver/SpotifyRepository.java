@@ -174,7 +174,16 @@ public class SpotifyRepository {
            }
        }
        if (check1==false)throw new Exception("Song does not exist");
+       if(song1.getLikes()==1){
+           return song1;
+       }
        song1.setLikes(1);
+       for(Song song:songs){
+           if(song.getTitle().equals(song1.getTitle())){
+               songs.remove(song);
+               songs.add(song1);
+           }
+       }
        List<User>users1=new ArrayList<>();
        if(songLikeMap.containsKey(song1))
        {
@@ -182,8 +191,33 @@ public class SpotifyRepository {
        }
         users1.add(user1);
        songLikeMap.put(song1,users1);
+       Album album=null;
        for(Map.Entry<Album,List<Song>>entry:albumSongMap.entrySet()){
-
+          List<Song>songs1=entry.getValue();
+          for(Song song:songs1){
+              if(song==song1){
+                  album=entry.getKey();
+                  break;
+              }
+          }
+       }
+       Artist artist=null;
+       for(Map.Entry<Artist,List<Album>>entry:artistAlbumMap.entrySet()){
+           List<Album>albums1=entry.getValue();
+           for(Album album1:albums1){
+               if(album1==album){
+                   artist=entry.getKey();
+                   break;
+               }
+           }
+       }
+       int like=0;
+       artist.setLikes(like++);
+       for (Artist artist1:artists){
+           if(artist1.getName().equals(artist.getName())){
+               artists.remove(artist1);
+               artists.add(artist);
+           }
        }
        return song1;
     }
