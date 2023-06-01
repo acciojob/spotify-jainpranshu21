@@ -116,7 +116,7 @@ public class SpotifyRepository {
         for(String s:songTitles)
             titles.add(s);
         for(Song song:songs){
-            if(titles.contains(song))
+            if(titles.contains(song.getTitle()))
                 songs1.add(song);
         }
         playlistSongMap.put(playlist,songs1);
