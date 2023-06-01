@@ -198,10 +198,12 @@ public class SpotifyRepository {
            }
        }
        List<User>users1=new ArrayList<>();
-       if(songLikeMap.containsKey(song1))
+       if(!songLikeMap.containsKey(song1))
        {
-           users1=songLikeMap.get(song1);
+           songLikeMap.put(song1,new ArrayList<>());
        }
+        users1=songLikeMap.get(song1);
+
         users1.add(user1);
        songLikeMap.put(song1,users1);
        Album album=null;
@@ -224,8 +226,9 @@ public class SpotifyRepository {
                }
            }
        }
-       int like=0;
-       artist.setLikes(like++);
+       int like=artist.getLikes();
+       like++;
+       artist.setLikes(like);
        for (Artist artist1:artists){
            if(artist1.getName().equals(artist.getName())){
                artists.remove(artist1);
